@@ -9,18 +9,20 @@ kr = pi / 180
 form = "###  \ \ ##   ##.#     ###      ###    ##.##     \  \\"
 num1 = open('jovrad.txt', 'w')
 yy = int(raw_input(("Year for which predictions are required ")))
-e = ((yy-1) / 100)
-f = 2 - e + (e/4)
-jd = (365.25 * (yy - 1)) + 1721423 + f + .5
+e = math.trunc(((yy-1) / 100))
+f = 2 - e + math.trunc(e/4)
+jd = math.trunc(365.25 * (yy - 1)) + 1721423 + f + .5
 d0 = jd - 2435108
 incr = 0
 dmax = 0
 tx = 0
 ty = 0
-if yy / 400 - (yy / 400) == 0:
+yyly = 0
+yylc = 0
+if yy / 400 - math.trunc((yy / 400)) == 0:
     incr = 1
-    yyly = yy / 4 - (yy / 4)
-    yylc = yy / 100 - (yy / 100)
+    yyly = yy / 4 - math.trunc((yy / 4))
+    yylc = yy / 100 - math.trunc((yy / 100))
 if yyly == 0 and yylc != 0:
     incr = 1
     ty = 59 + incr
@@ -35,7 +37,7 @@ print("\n", file=num1)
 th = 0
 def compute(d0, th, dmax):
     global U1, L3, dt, s
-    d = d0 + th / 24
+    d = d0 + math.trunc(th / 24)
     v = (157.0456 + .0011159 * d) % 360
     m = (357.2148 + .9856003 * d) % 360
     n = (94.3455 + .0830853 * d + .33 * math.sin(kr * v)) % 360
@@ -50,7 +52,7 @@ def compute(d0, th, dmax):
     ps = sp / .017452
     dl = d - dt / 173
     pb = ps - b
-    xi = 150.4529 * (dl) + 870.4529 * (dl - (dl))
+    xi = 150.4529 * math.trunc((dl)) + 870.4529 * (dl - math.trunc((dl)))
     L3 = (274.319 + pb + xi + .01016 * 51) % 360
     U1 = 101.5265 + 203.405863 * dl + pb
     U2 = 67.81114 + 101.291632 * dl + pb
@@ -73,15 +75,15 @@ def compute(d0, th, dmax):
 compute(d0, th, dmax)
 
 def outdat(th,tx,ty):
-    dy = (th / 24) + 1
+    dy = math.trunc((th / 24)) + 1
     h = th = (dy - 1) * 24
     if(dy > th):
-        m = ((dy - tx) / 30.6) + 3
-        da = dy - ty - ((m - 3) * 30.6 + .5)
+        m = math.trunc((dy - tx) / 30.6) + 3
+        da = dy - ty - math.trunc((m - 3) * 30.6 + .5)
     else:
-        m = ((dy - 1) / 31) + 1
+        m = math.trunc((dy - 1) / 31) + 1
         da = dy - (m - 1) * 31
     m = int(m)
     mn = month[(m-1)*3+1:(m-1)*3-1+3]
-    print(f, dy, mn, da, h, U1, L3, dt, s, file=num1)
+    print(dy, mn, da, h, U1, L3, dt, s, file=num1)
 outdat(th,tx,ty)
