@@ -84,7 +84,7 @@ while int(th / 24) + 1 <= dmax:
             da = dy - (m - 1) * 31
         mn = month[(m-1)]
 #        mn = month[(m-1)*3+1:(m-1)*3-1+3]
-        outstring = "%s  %i  %5.3f  %5.3f  %5.3f  %5.3f  %s\n" % (mn, da, h, U1, L3, dt, s)
+        outstring = "%s  %i  %2.1f  %i  %i  %1.2f  %s\n" % (mn, da, h, U1, L3, dt, s)
         num1.write(outstring)
     th = th + .5
 
