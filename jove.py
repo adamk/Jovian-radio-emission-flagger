@@ -5,7 +5,7 @@ import math
 print('Program to flag Jovian Decametric windows')
 month = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC']
 week = 42.46/360
-pi = 3.141593
+pi = math.pi
 kr = pi / 180
 num1 = open('jovrad.txt', 'w')
 yy = int(input(("Year for which predictions are required ")))
